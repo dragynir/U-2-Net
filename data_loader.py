@@ -241,7 +241,7 @@ class SalObjDataset(Dataset):
 
 		label = np.zeros(label_3.shape[0:2])
 		if(3==len(label_3.shape)):
-			label = label_3[:,:,0]
+			label = label_3[:,:,-1]
 		elif(2==len(label_3.shape)):
 			label = label_3
 

@@ -250,7 +250,6 @@ class SalObjDataset(Dataset):
 		elif(2==len(image.shape) and 2==len(label.shape)):
 			image = image[:,:,np.newaxis]
 			label = label[:,:,np.newaxis]
-		print(image.shape, label.shape)
 
 		if self.aug_transform:
 			res = self.aug_transform(image=image, mask=label)

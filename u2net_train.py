@@ -24,6 +24,8 @@ from data_loader import SalObjDataset
 from model import U2NET
 from model import U2NETP
 
+import ablumentations as A
+import cv2
 # ------- 1. define loss function --------
 
 bce_loss = nn.BCELoss(size_average=True)
@@ -84,9 +86,25 @@ print("---")
 
 train_num = len(tra_img_name_list)
 
+
+aug_transfroms = A.Compose([
+    A.ShiftScaleRotate(shift_limit=0.1,
+                           scale_limit=0.15,
+                           rotate_limit=10,
+                           p=0.5, border_mode=cv2.BORDER_CONSTANT),
+        A.HorizontalFlip(p=0.5),
+        A.HueSaturationValue(
+            hue_shift_limit=0.2,
+            sat_shift_limit=0.2,
+            val_shift_limit=0.2,
+            p=0.5
+        ),
+])
+
 salobj_dataset = SalObjDataset(
     img_name_list=tra_img_name_list,
     lbl_name_list=tra_lbl_name_list,
+    aug_transfroms=aug_transfroms,
     transform=transforms.Compose([
         RescaleT(320),
         RandomCrop(288),

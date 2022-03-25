@@ -213,13 +213,14 @@ class ToTensorLab(object):
 		return {'imidx':torch.from_numpy(imidx), 'image': torch.from_numpy(tmpImg), 'label': torch.from_numpy(tmpLbl)}
 
 class SalObjDataset(Dataset):
-	def __init__(self,img_name_list,lbl_name_list,transform=None):
+	def __init__(self,img_name_list,lbl_name_list,aug_transform=None,transform=None):
 		# self.root_dir = root_dir
 		# self.image_name_list = glob.glob(image_dir+'*.png')
 		# self.label_name_list = glob.glob(label_dir+'*.png')
 		self.image_name_list = img_name_list
 		self.label_name_list = lbl_name_list
 		self.transform = transform
+		self.aug_transform = aug_transform
 
 	def __len__(self):
 		return len(self.image_name_list)
@@ -250,6 +251,12 @@ class SalObjDataset(Dataset):
 			image = image[:,:,np.newaxis]
 			label = label[:,:,np.newaxis]
 		print(image.shape, label.shape)
+
+		if self.aug_transform:
+			res = self.aug_transform(image=image, mask=label)
+			image = res['image']
+			label = res['mask']
+
 		sample = {'imidx':imidx, 'image':image, 'label':label}
 
 		if self.transform:

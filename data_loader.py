@@ -256,7 +256,7 @@ class SalObjDataset(Dataset):
 			image = res['image']
 			label = res['mask']
 
-		np.save('/content/check/' + str(random.randint()) + '.npy', label)
+		np.save('/content/check/' + str(random.randint(0, 20)) + '.npy', label)
 
 		sample = {'imidx':imidx, 'image':image, 'label':label}
 

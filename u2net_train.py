@@ -48,14 +48,14 @@ def muti_bce_loss_fusion(d0, d1, d2, d3, d4, d5, d6, labels_v):
 
 model_name = 'u2net' #'u2netp'
 
-data_dir = os.path.join(os.getcwd(), 'train_data' + os.sep)
-tra_image_dir = os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'im_aug' + os.sep)
-tra_label_dir = os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'gt_aug' + os.sep)
+data_dir = '/content/content/dataset_croped/'
+tra_image_dir = 'images_croped/'
+tra_label_dir = 'masks_croped/'
 
 image_ext = '.jpg'
-label_ext = '.png'
+label_ext = '.jpg'
 
-model_dir = os.path.join(os.getcwd(), 'saved_models', model_name + os.sep)
+model_dir = '/content/drive/MyDrive/HappyWhale/segmentation_models/tune/'
 
 epoch_num = 100000
 batch_size_train = 12
@@ -100,12 +100,14 @@ if(model_name=='u2net'):
 elif(model_name=='u2netp'):
     net = U2NETP(3,1)
 
+net.load_state_dict(torch.load('/content/drive/MyDrive/HappyWhale/segmentation_models/u2net.pth'))
+
 if torch.cuda.is_available():
     net.cuda()
 
 # ------- 4. define optimizer --------
 print("---define optimizer...")
-optimizer = optim.Adam(net.parameters(), lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0)
+optimizer = optim.Adam(net.parameters(), lr=0.00001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0)
 
 # ------- 5. training process --------
 print("---start training...")

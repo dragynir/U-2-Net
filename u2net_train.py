@@ -24,7 +24,7 @@ from data_loader import SalObjDataset
 from model import U2NET
 from model import U2NETP
 
-import ablumentations as A
+import albumentations as A
 import cv2
 # ------- 1. define loss function --------
 
@@ -125,7 +125,7 @@ if torch.cuda.is_available():
 
 # ------- 4. define optimizer --------
 print("---define optimizer...")
-optimizer = optim.Adam(net.parameters(), lr=0.00001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0)
+optimizer = optim.Adam(net.parameters(), lr=0.0001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0)
 
 # ------- 5. training process --------
 print("---start training...")

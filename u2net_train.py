@@ -104,7 +104,7 @@ aug_transfroms = A.Compose([
 salobj_dataset = SalObjDataset(
     img_name_list=tra_img_name_list,
     lbl_name_list=tra_lbl_name_list,
-    aug_transfroms=aug_transfroms,
+    aug_transform=aug_transfroms,
     transform=transforms.Compose([
         RescaleT(320),
         RandomCrop(288),
